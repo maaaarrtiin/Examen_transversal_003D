@@ -1,0 +1,13 @@
+--Creacion del usuario
+create user c##examen identified by examen;
+grant connect, resource to c##examen;
+alter user c##examen default tablespace users quota unlimited on users;
+
+
+--Poblado de tabla cliente
+insert into app_cliente values ('21051420-1','MARTIN','962768115','mart.norambuena@duocuc.cl','El mañio 348','19','2');
+insert into app_cliente values ('21837463-4','LEONARDO','983765245','le.jara@duocuc.cl','Mira 878','18','3');
+insert into app_cliente values ('21225486-K','VICTOR','938276352','vi.guerra@duocuc.cl','El abeto 298','21','1');
+insert into app_cliente values ('20225485-6','PAULA','983728907','pau.velasquez@duocuc.cl','El avellano 365','24','5');
+insert into app_cliente values ('09676775-7','AGUSTIN','992072181','agustin.norambuena@hotmail.com','El mañio 348','58','2');
+insert into app_cliente values ('20053026-8','SEBASTIAN','922736277','se.guerrav@duocuc.cl','Arturo alessandri 707','25','3');

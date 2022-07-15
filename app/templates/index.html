@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+  <title>Inicio</title> 
+  {% load static %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet"> 
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- logo -->
+    <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="{% static 'img/logo.jpg' %}" width="90" height="90" alt="">
+    </a>
+    
+    <!-- enlaces -->
+    <div class="collapse navbar-collapse" id="opciones">   
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'quienessomos' %}">Quienes Somos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'galeria' %}">Galería de Fotos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'formulario' %}">Formulario de Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiferiados' %}">Feriados 2022</a>
+          </li>  
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mostrar3' %}">Compras</a>
+          </li>  
+          {% if perms.app.view_cliente %}        
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mostrar' %}">Clientes</a>
+          </li>
+          {% endif %} 
+          {% if perms.app.view_producto %} 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mostrar2' %}">Productos</a>
+          </li>
+          {% endif %} 
+          {% if perms.app.view_cliente %} 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiclientes' %}">API Clientes</a>
+          </li>  
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Bienvenid@ {{ user.username }}</a>
+          </li>  
+          
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'quienessomos' %}">Quienes Somos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'galeria' %}">Galería de Fotos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'formulario' %}">Formulario de Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiferiados' %}">Feriados 2022</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Iniciar sesion</a>
+          </li> 
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+  <br>
+  <div class="container-fluid">
+    
+    <div id="carousel1" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carousel1" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel1" data-slide-to="1"></li>
+        <li data-target="#carousel1" data-slide-to="2"></li>
+      </ol>
+      <!-- diapositivas -->
+      <div class="carousel-inner ">
+        
+        <div class="carousel-item active">
+          <a href="#"><img class="d-block w-100" src="{% static 'img/mascota1.jpg' %}" alt=""> </a>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'img/mascota2.jpg' %}" alt="">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'img/mascota3.jpg' %}" alt="">
+        </div>
+      </div>
+      <!-- botones de desplazamiento a izquierda y derecha -->      
+      <a class="carousel-control-prev" href="#carousel1" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carousel1" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+</div>
+<br>
+<div class="container-fluid">   
+  <div class="row">       
+    <div class="col-md">        
+        <div class="card">
+          <img class="card-img-top" src="{% static 'img/accesorios.jpg' %}">            
+          <div class="card-body">
+            <h4 class="card-title">Presentación</h4>
+            <p class="card-text">  Bienvenidos a nuestra página web! aquí publicaremos los accesorios que están a la venta para que conozcan todos nuestros productos, para poder comprar tienen que contactarnos vía teléfono, instagram, twitter o facebook, los despachos se demoran entre 1 a 3 días habiles y se cancelan como un monto extra al pagar el total, los envíos los realiza Chilexpress o Starken, el cual estimen más conveniente.
+            </p>
+          </div>
+        </div>          
+    </div>
+
+    <div class="col-md">        
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Objetivo</h4>
+            <p class="card-text">Esta es una organización sin fines de lucro, es por eso que toda nuestra ganancia será donada a un programa de ayuda que rescata animales en situación de calle y les busca un hogar. </p>
+          </div>
+          <img class="card-img-bottom" src="{% static 'img/nocompres.jpg' %}">                        
+        </div>          
+    </div>
+  </div>
+</div>
+
+
+  <footer>
+    <div class="row col-12">
+        <div class="col-lg-2">
+            <img src="{% static 'img/logo.jpg' %}" alt="logoBookStop" width="60px">
+        </div>
+        <div class="col-lg-1">
+            <a href="{% url 'index' %}" id="linkFooter"><strong>INICIO</strong></a>
+        </div>
+        <div class="col-lg-1">
+            <a href="{% url 'quienessomos' %}" id="linkFooter"><strong>QUIENES SOMOS</strong></a>
+        </div>
+        <div class="col-lg-1">
+            <a href="{% url 'galeria' %}" id="linkFooter"><strong>GALERIA DE FOTOS</strong></a>
+        </div>
+        <div class="col-lg-1">
+          <a href="{% url 'formulario' %}" id="linkFooter"><strong>FORMULARIO DE REGISTRO</strong></a>
+      </div>
+      <div class="col-lg-1">
+          <a href="{% url 'apiferiados' %}" id="linkFooter"><strong>FERIADOS 2022</strong></a>
+      </div>
+
+        <div class="col-lg-2">
+            <strong>Síguenos</strong>
+            <br><br>
+            <div class="row">
+                <img src="{% static 'img/face.png' %}" alt="" width="30px" height="30px"
+                    style=" margin-left: 15px;">
+                <img src="{% static 'img/twitter.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;">
+                <img src="{% static 'img/insta.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;">
+
+            </div>
+        </div>
+
+
+        <div class="col-lg-3">
+
+            <strong>Contacto</strong>
+            <br><br>
+            <div class="row">
+                <img src="{% static 'img/location.png' %}" alt="" width="20px" height="20px"
+                    style="margin-right: 10px; margin-left: 15px;">
+                <p>Av. El Avellano 348, Pudahuel</p>
+            </div>
+            <div class="row">
+                <img src="{% static 'img/fono.png' %}" alt="" width="20px" height="20px"
+                    style="margin-right: 10px; margin-left: 15px;">
+                <p>225554000</p>
+            </div>
+            <div class="row">
+                <img src="{% static 'img/email.png' %}" alt="" width="20px" height="20px"
+                    style="margin-right: 10px; margin-left: 15px;">
+                <p>consulta@cachupines.cl</p>
+            </div>
+            <br><br><br>
+
+            <p>@Copyrigth Derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+
+  
+
+
+
+
+
+  
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+</body>
+</html>

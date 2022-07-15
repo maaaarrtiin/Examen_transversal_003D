@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje</title>
+    {% load static %}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <a href="{% url 'index' %}">----> Volver al inicio</a>
+        <h3>Gracias por rellenar nuestro formulario!</h3>
+        <img class="container-fluid" src="{% static 'img/muchasmascotas.jpg' %}" alt="1280" width="720">
+    </div>
+</body>
+</html>

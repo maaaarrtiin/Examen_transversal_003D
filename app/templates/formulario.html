@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario de Registro</title>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+  <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet"> 
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <style>
+    body {
+        font-family: Arial;
+      }
+
+    input {
+        float: left;
+        width: 200px;
+        margin-bottom: 10px;
+    }
+
+    label {
+        clear: both;
+        float: left;
+        width: 180px;
+    }
+
+    button {
+        clear: both;
+        float: left;
+        width: 70px;
+    }
+
+    .error-control {
+        border: 1px solid red;
+    }
+
+    label.error {
+        color: red;
+        width: 300px;
+        font-size: 0.8em;
+        margin-top: -5px;
+        margin-bottom: 10px;
+    }
+    
+    #caja{
+        margin-top:50px;
+        margin-left:20px;
+   
+    }
+
+
+  </style>
+  <script>
+
+      $(function() 
+      {
+        $("#mi-formulario").validate({
+             rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: "required",
+                    fono: "required",
+                    fecha: "required",
+                    password2: {
+                        required: true,
+                        equalTo: "#password"
+                    }   
+                    
+                }, //rules
+            messages: {
+                email: {
+                    required: 'Ingresa tu correo electrónico',
+                    email: 'Formato de correo no válido'
+                },
+                nombre: {
+                    required: 'Ingresa tu nombre',
+                    minlength: 'Caracteres insuficientes'
+                },
+                password: {
+                    required: 'Ingresa una contraseña',
+                    minlength: 'Caracteres insuficientes'
+                },
+                fono:{
+                    required: 'Ingrese un número de celular',
+                    minlength: 'Cantidad de digitos insuficiente'
+                },
+                fecha:{
+                    required: 'Seleccione una fecha válida',
+                    max: 'Fecha no corresponde'
+                },
+                password2: {
+                    required: 'Reingresa la contraseña',
+                    equalTo: 'Las contraseñas ingresadas no coinciden',
+                    minlength: 'Caracteres insuficientes'
+
+                },
+                comuna: {
+                    required: 'Ingresa una comuna'
+                }
+            }//messages
+        }); //$('#mi-formulario').validate
+    }); //function
+
+
+  </script>
+  <script>
+              function CambiaColor(a)
+        {
+            a.style.background = "yellow";
+        }
+
+        function CambiarMayusculas()
+        {
+            var a = document.getElementById('nom');
+            a.value = a.value.toUpperCase();
+        }
+  </script>
+   
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- logo -->
+    <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="{% static 'img/logo.jpg' %}" width="90" height="90" alt="">
+    </a>
+    
+    <!-- enlaces -->
+    <div class="collapse navbar-collapse" id="opciones">   
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'quienessomos' %}">Quienes Somos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'galeria' %}">Galería de Fotos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'formulario' %}">Formulario de Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiferiados' %}">Feriados 2022</a>
+          </li>  
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mostrar3' %}">Compras</a>
+          </li>  
+          {% if perms.app.view_cliente %}        
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mostrar' %}">Clientes</a>
+          </li>
+          {% endif %} 
+          {% if perms.app.view_producto %} 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mostrar2' %}">Productos</a>
+          </li>
+          {% endif %} 
+          {% if perms.app.view_cliente %} 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiclientes' %}">API Clientes</a>
+          </li>  
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Bienvenid@ {{ user.username }}</a>
+          </li>  
+          
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'quienessomos' %}">Quienes Somos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'galeria' %}">Galería de Fotos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'formulario' %}">Formulario de Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiferiados' %}">Feriados 2022</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Iniciar sesion</a>
+          </li> 
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+      <br>
+    
+    
+    
+    <div class="container">
+      <h1 onmouseover="style.color = 'brown'" onmouseout="style.color= 'black'">Formulario de Registro</h1>
+    <hr>
+    <div id="caja">
+    <form id="mi-formulario" action="{% url 'mensaje' %}" method="post">
+        {%csrf_token%}        
+        <div class="form-group">
+        <label>Correo Electrónico: </label>
+        <input type="text" name="email" required placeholder="nombre@dominio.cl"  onfocus="CambiaColor(this)">
+        </div>
+
+        <div class="form-group">
+            <label>Nombre: </label>
+            <input type="text" id="nom" name="nombre" minlength="2" required onchange="CambiarMayusculas()">
+            </div>
+
+        <div class="form-group">
+        <label>Telefono: </label>
+        <input type="number" name="fono" minlength="9" min="0" required>
+        </div>
+
+        <div class="form-group">
+        <label>Fecha de Nacimiento: </label>
+        <input type="date" name="fecha" max="2021-12-31" required>
+        </div>
+
+        <div class="form-group">
+        <label>Contraseña:</label>
+        <input type="password" id="password" name="password" minlength="8">
+        </div>
+      
+        <div class="form-group">
+        <label>Reingresa contraseña: </label>
+        <input type="password" name="password2" minlength="8">
+        </div>
+
+        <div class="form-group">
+            <label for="comuna">Comuna del usuario: </label><br>
+            <select name="comuna" class="form-control" id="comuna" required>
+                <option value="">Seleccione una comuna..</option>
+                <option value="1">Santiago</option>
+                <option value="2">Conchalí</option>
+                <option value="3">Huechuraba</option>
+                <option value="4">Independencia</option>
+                <option value="5">Quilicura</option></option>
+                <option value="6">Recoleta</option>
+                <option value="7">Renca</option>
+                <option value="8">Las Condes</option>
+                <option value="9">Lo Barnechea</option>
+                <option value="10">Providencia</option>
+                <option value="11">Vitacura</option>
+                <option value="12">La Reina</option>
+                <option value="13">Macul</option>
+                <option value="14">Ñuñoa</option>
+                <option value="15">Peñalolén</option>
+                <option value="16">La Florida</option>
+                <option value="17">La Granja</option>
+                <option value="18">El Bosque</option>
+                <option value="19">La Cisterna</option>
+                <option value="20">La Pintana</option>
+                <option value="21">San Ramón</option>
+                <option value="22">Lo Espejo</option>
+                <option value="23">Pedro Aguirre Cerda</option>
+                <option value="24">San Joaquín</option>
+                <option value="25">San Miguel</option>
+                <option value="26">Cerrillos</option>
+                <option value="27">Estación Central</option>
+                <option value="28">Maipú</option>
+                <option value="29">Cerro Navia</option>
+                <option value="30">Lo Prado</option>
+                <option value="31">Pudahuel</option>
+                <option value="32">Quinta Normal</option>
+                <option value="33">Otra comuna fuera de la RM</option>
+            </select>
+        </div>
+      
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+    </div>
+    <br>
+    <br>
+
+    <footer>
+        <div class="row col-12">
+            <div class="col-lg-2">
+                <img src="{% static 'img/logo.jpg' %}" alt="logoBookStop" width="60px">
+            </div>
+            <div class="col-lg-1">
+                <a href="{% url 'index' %}" id="linkFooter"><strong>INICIO</strong></a>
+            </div>
+            <div class="col-lg-1">
+                <a href="{% url 'quienessomos' %}" id="linkFooter"><strong>QUIENES SOMOS</strong></a>
+            </div>
+            <div class="col-lg-1">
+                <a href="{% url 'galeria' %}" id="linkFooter"><strong>GALERIA DE FOTOS</strong></a>
+            </div>
+            <div class="col-lg-1">
+              <a href="{% url 'formulario' %}" id="linkFooter"><strong>FORMULARIO DE REGISTRO</strong></a>
+          </div>
+          <div class="col-lg-1">
+              <a href="{% url 'apiferiados' %}" id="linkFooter"><strong>FERIADOS 2022</strong></a>
+          </div>
+      
+            <div class="col-lg-2">
+                <strong>Síguenos</strong>
+                <br><br>
+                <div class="row">
+                    <img src="{% static 'img/face.png' %}" alt="" width="30px" height="30px"
+                        style=" margin-left: 15px;">
+                    <img src="{% static 'img/twitter.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;">
+                    <img src="{% static 'img/insta.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;">
+      
+                </div>
+            </div>
+      
+      
+            <div class="col-lg-3">
+      
+                <strong>Contacto</strong>
+                <br><br>
+                <div class="row">
+                    <img src="{% static 'img/location.png' %}" alt="" width="20px" height="20px"
+                        style="margin-right: 10px; margin-left: 15px;">
+                    <p>Av. El Avellano 348, Pudahuel</p>
+                </div>
+                <div class="row">
+                    <img src="{% static 'img/fono.png' %}" alt="" width="20px" height="20px"
+                        style="margin-right: 10px; margin-left: 15px;">
+                    <p>225554000</p>
+                </div>
+                <div class="row">
+                    <img src="{% static 'img/email.png' %}" alt="" width="20px" height="20px"
+                        style="margin-right: 10px; margin-left: 15px;">
+                    <p>consulta@cachupines.cl</p>
+                </div>
+                <br><br><br>
+      
+                <p>@Copyrigth Derechos reservados.</p>
+            </div>
+        </div>
+      </footer>
+</body>
+</html>

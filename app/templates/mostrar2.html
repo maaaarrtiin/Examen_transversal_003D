@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar Productos</title>
+    {% load static %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet"> 
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- logo -->
+    <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="{% static 'img/logo.jpg' %}" width="90" height="90" alt="">
+    </a>
+    
+    <!-- enlaces -->
+    <div class="collapse navbar-collapse" id="opciones">   
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'quienessomos' %}">Quienes Somos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'galeria' %}">Galería de Fotos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'formulario' %}">Formulario de Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiferiados' %}">Feriados 2022</a>
+          </li>  
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mostrar3' %}">Compras</a>
+          </li>  
+          {% if perms.app.view_cliente %}        
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mostrar' %}">Clientes</a>
+          </li>
+          {% endif %} 
+          {% if perms.app.view_producto %} 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mostrar2' %}">Productos</a>
+          </li>
+          {% endif %} 
+          {% if perms.app.view_cliente %} 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiclientes' %}">API Clientes</a>
+          </li>  
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Bienvenid@ {{ user.username }}</a>
+          </li>  
+          
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'quienessomos' %}">Quienes Somos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'galeria' %}">Galería de Fotos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'formulario' %}">Formulario de Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiferiados' %}">Feriados 2022</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Iniciar sesion</a>
+          </li> 
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+      <br>
+
+    <div class="container">
+
+        <h2>Mostrando Productos</h2>
+        {% if user.is_authenticated %}
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Id del Producto</th>
+                    <th>Nombre del producto</th>
+                    <th>Descripcion del producto</th>
+                    <th>Stock del producto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pr in productos %}
+                <tr>
+                    <td><img src="{{pr.image.url}}" width="90" height="90" alt=""></td>
+                    <td>{{ pr.idprod }}</td>
+                    <td>{{ pr.nombprod }}</td>
+                    <td>{{ pr.descripcion_prod }}</td>
+                    <td>{{ pr.stock }}</td>
+                    <td><a href="{% url 'form_mod_producto' pr.idprod %}" class="btn btn-success">Modificar</a></td>
+                    <td><a href="{% url 'form_del_producto' pr.idprod %}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+        <a href="{% url 'forms_productos' %}" class="btn btn-success">Crear un nuevo producto</a>
+
+    </div>
+    <br>
+
+    <footer>
+        <div class="row col-12">
+            <div class="col-lg-2">
+                <img src="{% static 'img/logo.jpg' %}" alt="logoBookStop" width="60px">
+            </div>
+            <div class="col-lg-1">
+                <a href="{% url 'index' %}" id="linkFooter"><strong>INICIO</strong></a>
+            </div>
+            <div class="col-lg-1">
+                <a href="{% url 'quienessomos' %}" id="linkFooter"><strong>QUIENES SOMOS</strong></a>
+            </div>
+            <div class="col-lg-1">
+                <a href="{% url 'galeria' %}" id="linkFooter"><strong>GALERIA DE FOTOS</strong></a>
+            </div>
+            <div class="col-lg-1">
+              <a href="{% url 'formulario' %}" id="linkFooter"><strong>FORMULARIO DE REGISTRO</strong></a>
+          </div>
+          <div class="col-lg-1">
+              <a href="{% url 'apiferiados' %}" id="linkFooter"><strong>FERIADOS 2022</strong></a>
+          </div>
+    
+            <div class="col-lg-2">
+                <strong>Síguenos</strong>
+                <br><br>
+                <div class="row">
+                    <img src="{% static 'img/face.png' %}" alt="" width="30px" height="30px"
+                        style=" margin-left: 15px;">
+                    <img src="{% static 'img/twitter.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;">
+                    <img src="{% static 'img/insta.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;">
+    
+                </div>
+            </div>
+    
+    
+            <div class="col-lg-3">
+    
+                <strong>Contacto</strong>
+                <br><br>
+                <div class="row">
+                    <img src="{% static 'img/location.png' %}" alt="" width="20px" height="20px"
+                        style="margin-right: 10px; margin-left: 15px;">
+                    <p>Av. El Avellano 348, Pudahuel</p>
+                </div>
+                <div class="row">
+                    <img src="{% static 'img/fono.png' %}" alt="" width="20px" height="20px"
+                        style="margin-right: 10px; margin-left: 15px;">
+                    <p>225554000</p>
+                </div>
+                <div class="row">
+                    <img src="{% static 'img/email.png' %}" alt="" width="20px" height="20px"
+                        style="margin-right: 10px; margin-left: 15px;">
+                    <p>consulta@cachupines.cl</p>
+                </div>
+                <br><br><br>
+    
+                <p>@Copyrigth Derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    {% else %}
+    <br><br><br>
+    <h1  style="color:red; text-align: center;">No tiene permisos para ver los productos </h1>
+    {% endif %}
+</body>
+</html>
